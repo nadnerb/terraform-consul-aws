@@ -21,18 +21,18 @@ variable "aws_region" {
 }
 
 variable "servers" {
-    default = "3"
+    default = "2"
     description = "The number of Consul servers to launch."
 }
 
 variable "aws_vpcs" {
-	default = {
-		ap-southeast-2 = "vpc-f753bd92"
-	}
+  default = {
+    ap-southeast-2 = "vpc-08b97a6d"
+  }
 }
 
 variable "aws_subnets" {
-	default = {
-		ap-southeast-2 = "subnet-5fc53a3a"
-	}
+  default = {
+    ap-southeast-2 = "subnet-39e43a5c"
+  }
 }

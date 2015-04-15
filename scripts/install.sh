@@ -33,6 +33,10 @@ wget https://dl.bintray.com/mitchellh/consul/0.5.0_web_ui.zip -O consul-ui.zip
 unzip consul-ui.zip >/dev/null
 sudo mv dist /mnt/consul/ui
 
+echo "Configuring consul"
+sudo mv /tmp/consul.conf /etc/consul.d/consul.json
+chmod 0644 /etc/consul.d/consul.json
+
 echo "Installing Upstart service..."
 sudo mv /tmp/upstart.conf /etc/init/consul.conf
 sudo mv /tmp/upstart-join.conf /etc/init/consul-join.conf
