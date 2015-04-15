@@ -45,34 +45,6 @@ resource "aws_security_group" "consul" {
   }
 }
 
-# Create a new load balancer
-resource "aws_elb" "consul" {
-  name = "consul-elb"
-  availability_zones = ["ap-southeast-2a"]
-
-  listener {
-    instance_port = 8500
-    instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
-  }
-
-  health_check {
-    healthy_threshold = 2
-    unhealthy_threshold = 2
-    timeout = 3
-    target = "TCP:8500"
-    interval = 30
-  }
-
-  instances = ["${aws_instance.server.0.id}", "${aws_instance.server.1.id}"]
-  cross_zone_load_balancing = true
-
-  tags {
-    Name = "consul elb"
-  }
-}
-
 resource "aws_instance" "server" {
 
     ami = "${lookup(var.ami, var.aws_region)}"
