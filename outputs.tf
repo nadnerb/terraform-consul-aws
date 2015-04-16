@@ -1,7 +1,7 @@
-output "server_address" {
-    value = "${aws_instance.server.0.public_dns}"
+output "private dns" {
+  value = "`${join(",", aws_instance.consul.private-dns)}`"
 }
 
-output "server_ip" {
-    value = "${aws_instance.server.0.public_ip}"
+output "private ips" {
+  value = "`${join(",", aws_instance.consul.private-ip)}`"
 }

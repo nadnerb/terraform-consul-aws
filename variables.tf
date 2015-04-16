@@ -20,6 +20,10 @@ variable "aws_region" {
     description = "The region of AWS, for AMI lookups."
 }
 
+variable "public_ip" {
+    default = "false"
+}
+
 variable "servers" {
     default = "2"
     description = "The number of Consul servers to launch."

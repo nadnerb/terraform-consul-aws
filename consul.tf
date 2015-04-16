@@ -45,7 +45,7 @@ resource "aws_security_group" "consul" {
   }
 }
 
-resource "aws_instance" "server" {
+resource "aws_instance" "consul" {
 
     ami = "${lookup(var.ami, var.aws_region)}"
     instance_type = "t2.small"
@@ -55,16 +55,18 @@ resource "aws_instance" "server" {
 
     subnet_id = "${lookup(var.aws_subnets, var.aws_region)}"
 
-    # fix this with a bastion
-    associate_public_ip_address = "true"
+    associate_public_ip_address = "${var.public_ip}"
 
     tags {
         Name = "consul-${count.index+1}"
     }
 
     connection {
-        user = "ubuntu"
-        key_file = "${var.key_path}"
+      user = "ubuntu"
+      type = "ssh"
+      /*change this to public if you don't have access via private ip's*/
+      host = "${self.private_ip}"
+      key_file = "${var.key_path}"
     }
 
     # redo using ansible
@@ -86,7 +88,7 @@ resource "aws_instance" "server" {
     provisioner "remote-exec" {
         inline = [
             "echo ${var.servers} > /tmp/consul-server-count",
-            "echo ${aws_instance.server.0.private_dns} > /tmp/consul-server-addr",
+            "echo ${aws_instance.consul.0.private_dns} > /tmp/consul-server-addr",
         ]
     }
 
