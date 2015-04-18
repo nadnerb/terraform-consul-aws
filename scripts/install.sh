@@ -6,7 +6,7 @@ JOIN_ADDRS=$(cat /tmp/consul-server-addr | tr -d '\n')
 
 echo "Installing dependencies..."
 sudo apt-get update -y
-sudo apt-get install -y unzip
+sudo apt-get install -y unzip screen curl vim
 
 echo "Fetching Consul..."
 cd /tmp
