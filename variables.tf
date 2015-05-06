@@ -40,3 +40,7 @@ variable "aws_subnets" {
     ap-southeast-2 = "subnet-39e43a5c"
   }
 }
+
+variable "stream_tag" {
+  default = "default"
+}

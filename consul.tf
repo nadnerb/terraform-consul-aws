@@ -4,9 +4,9 @@ provider "aws" {
     region = "${var.aws_region}"
 }
 
-resource "aws_security_group" "consul" {
-  name = "consul"
-  description = "Consul internal traffic, UI + maintenance."
+resource "aws_security_group" "consul_server" {
+  name = "consul server"
+  description = "Consul server internal traffic, UI + maintenance."
   vpc_id = "${lookup(var.aws_vpcs, var.aws_region)}"
 
   // These are for internal traffic
@@ -42,6 +42,7 @@ resource "aws_security_group" "consul" {
 
   tags {
     Name = "consul security group"
+    stream = "${var.stream_tag}"
   }
 }
 
@@ -51,7 +52,7 @@ resource "aws_instance" "consul" {
     instance_type = "t2.small"
     key_name = "${var.key_name}"
     count = "${var.servers}"
-    security_groups = ["${aws_security_group.consul.id}"]
+    security_groups = ["${aws_security_group.consul_server.id}"]
 
     subnet_id = "${lookup(var.aws_subnets, var.aws_region)}"
 
